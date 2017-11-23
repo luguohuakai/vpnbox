@@ -43,14 +43,16 @@ class Index extends Controller
         $app_id = config('wx.app_id');
         $app_secret = config('wx.app_secret');
 
-        $api = "cgi-bin/token?grant_type=client_credential&$app_id=APPID&secret=$app_secret";
+        $api = "cgi-bin/token?grant_type=client_credential&appid=$app_id&secret=$app_secret";
         $url = $domain . $api;
 
         $rs = get($url);
 
-        dd($rs);
-
-
+        // 还是存redis算了
+        if($rs){
+            $rds = Rwx();
+            $rds->set('weixin:token',$rs);
+        }
     }
 
     // 连接数据库

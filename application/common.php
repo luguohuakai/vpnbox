@@ -41,6 +41,24 @@ if(!function_exists('Rds')){
     }
 }
 
+if(!function_exists('Rwx')){
+    /**
+     * @param int $index
+     * @param int $port
+     * @param string $host
+     * @param string $pass
+     * @return Redis
+     */
+    function Rwx($index = 1,$port = 16382,$host = 'localhost',$pass = 'srun_3000@redis'){
+        $rds = new \Redis();
+        $rds->connect($host,$port);
+        $rds->auth($pass);
+        $rds->select($index);
+
+        return $rds;
+    }
+}
+
 if(!function_exists('alert')){
     /**
      * @param $var
