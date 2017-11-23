@@ -49,6 +49,8 @@ class Index extends Controller
         $rs = get($url);
 
         dd($rs);
+
+
     }
 
     // 连接数据库
