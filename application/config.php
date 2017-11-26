@@ -141,7 +141,13 @@ return [
     ],
 
     // 视图输出字符串内容替换
-    'view_replace_str'       => [],
+    'view_replace_str'       => [
+        '__CSS__' => '/static/css',
+        '__JS__' => '/static/js',
+        '__INCLUDE__' => '/include',
+        '__IMAGES__' => '/static/images',
+        '__VENDOR__' => '/vendor',
+    ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
     'dispatch_error_tmpl'    => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
@@ -246,6 +252,7 @@ return [
         'domain' => 'https://api.weixin.qq.com/',
         'app_id' => 'wx3af475e968290a3e',
         'app_secret' => '8bfbb5e3377d7ab39ac70b945165d954',
+        'open_domain' => 'https://open.weixin.qq.com/',
     ],
 
     // +----------------------------------------------------------------------
@@ -254,5 +261,12 @@ return [
     'redis' => [
         'password' => 'srun_3000@redis',
         'host' => '127.0.0.1',
+    ],
+
+    // +----------------------------------------------------------------------
+    // | my设置
+    // +----------------------------------------------------------------------
+    'my' => [
+        'domain' => 'http://test.srun.com/',
     ]
 ];

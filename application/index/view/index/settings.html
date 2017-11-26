@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <!--<link rel="stylesheet" type="text/css" href="dist/antui.min.css" media="all">-->
+    <!-- 主文件 -->
+    <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/antui.css"/>
+
+    <!-- 组件 -->
+    <link rel="stylesheet"
+          href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/??widget/message.css,widget/loading.css,widget/switch.css,widget/card.css,icon/message.css,widget/notice.css,widget/page-result.css,widget/toast.css"/>
+
+    <!-- js -->
+    <script charset="utf-8" src="__JS__/jquery.min.js"></script>
+    <script charset="utf-8" src="__JS__/common.js"></script>
+    <script src="https://a.alipayobjects.com/g/antui/antui/10.0.18/antui.js"></script>
+
+    <title>欢迎使用深澜 SRUNBOX</title>
+</head>
+<body>
+<div class="widget-demo-show-panel" style="display: block">
+    <div class="demo demo-list">
+
+
+        <div class="am-list">
+            <div class="am-list-header">设置</div>
+            <div class="am-list-body">
+                <div class="am-list-item">
+                    <div class="am-list-content">是否启用</div>
+                    <div class="am-switch">
+                        <input type="checkbox" name="is_enable" id="is_enable" class="am-switch-checkbox">
+                        <label class="am-switch-label">
+                            <div class="am-switch-inner"></div>
+                            <div class="am-switch-switch"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="am-list">
+
+            <a href="{:url('resetpassword')}" class="am-list-item">
+                <div class="am-list-content">重置密码</div>
+                <span class="am-bubble reddot"></span>
+                <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+            </a>
+
+            <a href="{:url('setstoptime')}" class="am-list-item">
+                <div class="am-list-content">设定使用期限</div>
+                <span class="am-bubble reddot"></span>
+                <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+            </a>
+
+            <a href="{:url('changeproduct')}" class="am-list-item">
+                <div class="am-list-content">切换产品</div>
+                <span class="am-bubble reddot"></span>
+                <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+            </a>
+        </div>
+
+        <div class="am-list">
+
+            <div class="am-list-header">数据统计</div>
+            <a href="{:url('consumption')}" class="am-list-item">
+                <div class="am-list-content">消费统计</div>
+                <span class="am-bubble reddot"></span>
+                <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+            </a>
+
+            <a href="{:url('used')}" class="am-list-item">
+                <div class="am-list-content">使用量统计</div>
+                <span class="am-bubble reddot"></span>
+                <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<!-- 整页加载 -->
+<div class="am-loading page" style="display: none">
+    <i class="am-icon loading" aria-hidden="true"></i>
+    <div class="am-loading-text">加载中</div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.widget-demo-show-panel').hide();
+        $('.am-loading').show();
+        $.post(
+            '__INCLUDE__/proxy.php',
+            {interface: 'qr/get-box-status', user_name: SS('user_name')},
+            function (e) {
+                $('.am-loading').hide();
+                $('.widget-demo-show-panel').show();
+                if (e.code === 200) {
+                    if (e.data === 0) {
+                        $('#is_enable').attr('checked', true);
+                    }
+                }
+            }, 'json'
+        );
+
+        // 启用和禁用
+        $('#is_enable').click(function () {
+            var old_status = $(this).attr('checked');
+            var status;
+            // $('.am-toast-loading').show();
+            toast_show('设定中...','loading',false);
+            if (old_status === 'checked') {
+                // 禁用
+                status = 1;
+            } else {
+                // 启用
+                status = 0;
+            }
+
+            var stop = false;
+            post(
+                'qr/start-or-stop',
+                {user_name: SS('user_name'), cmd: status},
+                function (e) {
+                    // $('.am-toast').hide();
+                    toast_hide();
+                    if(e.code === 0){
+                        toast_show(e.message,'network');
+                    }else {
+                        toast_show(e.msg);
+                    }
+                    if (e.code !== 200) {
+                        stop = true;
+                        return false;
+                    }
+                },false
+            );
+            if(stop){
+                return false;
+            }
+
+            if (old_status === 'checked') {
+                $(this).attr('checked', false)
+            } else {
+                $(this).attr('checked', true)
+            }
+        })
+    })
+</script>
+</body>
+
+</html>

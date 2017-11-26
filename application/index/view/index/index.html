@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <!--<link rel="stylesheet" type="text/css" href="dist/antui.min.css" media="all">-->
+    <!-- 主文件 -->
+    <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/antui.css"/>
+
+    <!-- 组件 -->
+    <link rel="stylesheet"
+          href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/??widget/message.css,widget/loading.css,widget/card.css,icon/message.css,widget/notice.css,widget/page-result.css,widget/toast.css"/>
+
+    <!-- js -->
+    <script src="https://a.alipayobjects.com/g/antui/antui/10.0.18/antui.js"></script>
+
+    <title>欢迎使用深澜 SRUNBOX</title>
+</head>
+<body>
+<div class="widget-demo-show-panel" style="display: none">
+    <div class="demo demo-list">
+        <!--<img src="dist/images/banner.png" style="width: 100%">-->
+        <div id="is_online" class="am-message result" role="alert">
+            <i id="is_online_icon" class="" aria-hidden="true"></i>
+            <div id="is_online_main" class="am-message-main"></div>
+            <div id="is_online_sub" class="am-message-sub"></div>
+        </div>
+
+        <div id="is_normal" class="am-message multi" role="alert">
+            <i id="is_normal_icon" class="" aria-hidden="true"></i>
+            <div id="is_normal_main" class="am-message-main"></div>
+            <div id="is_normal_sub" class="am-message-sub"></div>
+        </div>
+
+        <div id="is_vpn" class="am-message" role="alert">
+            <i id="is_vpn_icon" class="" aria-hidden="true"></i>
+            <div id="is_vpn_main" class="am-message-main"></div>
+            <div id="is_vpn_sub" class="am-message-sub"></div>
+        </div>
+
+        <div id='div2'>
+            <div class="am-card am-card-noicon">
+                <div class="am-card-item am-card-minfo">
+                    <div class="am-card-content">
+                        <div class="am-card-title">欢迎使用深澜 SRUNBOX</div>
+                        <div class="am-card-subtitle">
+                            eduroamBox 适合于国际会议，图书馆，咖啡厅等公共场合的eduroam 覆盖，实现有eduroam账号的用户无感知的接入WIFI，如需要请联系 <a
+                                href="mailto:Box@srun.com">Box@srun.com</a> ,或致电
+                            <a href="tel:010-68060048">010-68060048</a>
+                        </div>
+                    </div>
+
+                    <!--<div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>-->
+                </div>
+            </div>
+
+            <div class="am-button-wrap">
+                <a class="am-button blue" href="{:url('payway',['mac' => $Request.param.mac])}">充值</a>
+                <!--<button class="am-button blue" href="./pay_way.html?mac=">充值-->
+                <!--<button class="am-button white">辅助操作</button>-->
+            </div>
+
+            <div class="am-button-wrap">
+                <a href="{:url('settings')}" class="am-button white" role="button">设置</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="am-loading page">
+    <i class="am-icon loading" aria-hidden="true"></i>
+    <div class="am-loading-text">BOX检测中</div>
+</div>
+
+<div class="am-toast" role="alert" aria-live="assertive" style="display: none">
+    <div class="am-toast-text">
+        <span class="am-icon toast warn" aria-hidden="true"></span>
+        <span class="my_text"></span>
+    </div>
+</div>
+
+</body>
+
+<script charset="utf-8" src="__JS__/jquery.min.js"></script>
+<script charset="utf-8" src="__JS__/common.js"></script>
+<script type="text/javascript">
+    // box状态检测
+    $(function () {
+        // 保存user_name
+        if (SS('user_name') === null){
+            SS('user_name','{$Request.param.mac}');
+        }
+        $.post(
+            "__INCLUDE__/proxy.php",
+            {interface:'qr/check',mac:'{$Request.param.mac}'},
+            function (e) {
+                $('.am-loading').hide();
+                if (e.code === 200) {
+                    $('#is_online_icon').addClass('am-icon result success');
+                    $('#is_online_main').text('已联网');
+                    $('#is_online_sub').text('恭喜您已经成功接入SRUNBOX');
+
+                    $('#is_normal_icon').addClass('am-icon message-multi success');
+                    $('#is_normal_main').text('费用正常');
+                    $('#is_normal_sub').text('');
+
+                    $('#is_vpn_icon').addClass('am-icon message success');
+                    $('#is_vpn_main').text('VPN 正常');
+                    $('#is_vpn_sub').text('VPN 已正常连接');
+                } else if (e.code === 4001) {
+                    $('#is_online_icon').addClass('am-icon result error');
+                    $('#is_online_main').text('设备未联网');
+                    $('#is_online_sub').text('请检查设备WAN口是否正确连接或是4G是否正常');
+
+                    // $('#is_normal_icon').addClass('am-icon message-multi success');
+                    // $('#is_normal_main').text('费用正常');
+                    // $('#is_normal_sub').text('');
+                    $('#is_normal').hide();
+                    //
+                    // $('#is_vpn_icon').addClass('am-icon message success');
+                    // $('#is_vpn_main').text('VPN 正常');
+                    // $('#is_vpn_sub').text('VPN 已正常连接');
+                    $('#is_vpn').hide();
+                } else if (e.code === 4002) {
+                    $('#is_online_icon').addClass('am-icon result wait');
+                    $('#is_online_main').text('已接入');
+                    $('#is_online_sub').text('恭喜您已经成功接入SRUNBOX');
+
+                    $('#is_normal_icon').addClass('am-icon message-multi error');
+                    $('#is_normal_main').text('余额不足');
+                    $('#is_normal_sub').text('缴费5元即可畅游网络');
+
+                    // $('#is_vpn_icon').addClass('am-icon message success');
+                    // $('#is_vpn_main').text('VPN 正常');
+                    // $('#is_vpn_sub').text('VPN 已正常连接');
+                    $('#is_vpn').hide();
+                } else if (e.code === 4003) {
+                    $('#is_online_icon').addClass('am-icon result success');
+                    $('#is_online_main').text('已联网');
+                    $('#is_online_sub').text('恭喜您已经成功接入SRUNBOX');
+
+                    $('#is_normal_icon').addClass('am-icon message-multi success');
+                    $('#is_normal_main').text('费用正常');
+                    $('#is_normal_sub').text('');
+
+                    $('#is_vpn_icon').addClass('am-icon message error');
+                    $('#is_vpn_main').text('VPN 连接异常');
+                    $('#is_vpn_sub').text('请检查您的 VPN 设置');
+                } else {
+                    toast('ooh my ga 网络异常', false);
+                    return false;
+                }
+                $('.widget-demo-show-panel').show();
+            }, 'json'
+        )
+    });
+</script>
+</html>

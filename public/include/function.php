@@ -1,15 +1,11 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2016 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 流年 <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+/**
+ * Created by PhpStorm.
+ * User: DM
+ * Date: 17/3/31
+ * Time: 上午11:45
+ */
 
-// 应用公共文件
 if(!function_exists('dd')){
     /**
      * 调试输出
@@ -41,24 +37,6 @@ if(!function_exists('Rds')){
     }
 }
 
-if(!function_exists('Rwx')){
-    /**
-     * @param int $index
-     * @param int $port
-     * @param string $host
-     * @param string $pass
-     * @return Redis
-     */
-    function Rwx($index = 1,$port = 16382,$host = 'localhost',$pass = 'srun_3000@redis'){
-        $rds = new \Redis();
-        $rds->connect($host,$port);
-        $rds->auth($pass);
-        $rds->select($index);
-
-        return $rds;
-    }
-}
-
 if(!function_exists('alert')){
     /**
      * @param $var
@@ -69,26 +47,18 @@ if(!function_exists('alert')){
     }
 }
 
-if (!function_exists('L')) {
+if(!function_exists('L')){
     /**
      * @param $msg
      * @param $file_name
      */
-    function L($msg, $file_name)
-    {
-        $log_path = __DIR__ . '/../../center/runtime/logs/';
-        $file_name_arr = explode('/',$file_name);
-        if(count($file_name_arr) > 1){
-            if (!is_dir($log_path . $file_name_arr[0])){
-                mkdir($log_path . $file_name_arr[0]);
-            }
-        }
+    function L($msg,$file_name){
         $msg = date('Y-m-d H:i:s')
             . "\r\n" . $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']
             . "\r\n" . Yii::$app->controller->module->id . '/' . Yii::$app->controller->id . '/' . Yii::$app->controller->action->id
             . "\r\n输出信息:" . $msg
             . "\r\n\r\n";
-        error_log($msg, 3, $log_path . $file_name . '_' . date('Y-m-d') . '.txt');
+        error_log($msg,3,__DIR__ . '/../../center/runtime/logs/'. $file_name . '_' . date('Y-m-d') . '.txt');
     }
 }
 
@@ -138,8 +108,6 @@ if (!function_exists('get')) {
     function get($url){
         //初始化
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); // https请求 不验证证书和hosts
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
         //设置选项，包括URL
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -161,8 +129,6 @@ if (!function_exists('post')) {
      */
     function post($url,$post_data){
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); // https请求 不验证证书和hosts
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         // post数据
@@ -190,22 +156,11 @@ if (!function_exists('C')) {
 if (!function_exists('transform_mac_to_formal')) {
     /**
      * 转化为标准mac
-     * @param $user_name
-     * @return string
-     */
-    function transform_mac_to_formal($user_name){
-        return strtolower(str_replace('-', ':', trim($user_name)));
-    }
-}
-
-if (!function_exists('transform_mac_to_user_name')) {
-    /**
-     * 转化为标准user_name
      * @param $mac
      * @return string
      */
-    function transform_mac_to_user_name($mac){
-        return strtoupper(str_replace(':', '-', trim($mac)));
+    function transform_mac_to_formal($mac){
+        return strtolower(str_replace('-', ':', trim($mac)));
     }
 }
 
@@ -218,34 +173,7 @@ if (!function_exists('json')) {
      * @param array $options
      * @return mixed
      */
-//    function json($msg = '请求成功', $code = 200, $data = [], $header = [], $options = [])
-//    {
-//        header('content-type:application/json');
-//
-//        if(is_array($msg)){
-//            return $msg;
-//        }
-//
-//        $re['msg'] = $msg;
-//        $re['code'] = $code;
-//        if(!empty($data)){
-//            $re['data'] = $data;
-//        }
-//
-//        return $re;
-//    }
-}
-
-if (!function_exists('J')) {
-    /**
-     * @param array $data
-     * @param string $msg
-     * @param int $code
-     * @param array $header
-     * @param array $options
-     * @return mixed
-     */
-    function J($msg = '请求成功', $code = 200, $data = [], $header = [], $options = [])
+    function json($msg = '请求成功', $code = 200, $data = [], $header = [], $options = [])
     {
         header('content-type:application/json');
 
@@ -259,6 +187,6 @@ if (!function_exists('J')) {
             $re['data'] = $data;
         }
 
-        exit(json_encode($re));
+        return $re;
     }
 }

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <!-- 主文件 -->
+    <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/antui.css"/>
+
+    <!-- 组件 -->
+    <link rel="stylesheet"
+          href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/??widget/message.css,widget/notice.css,widget/page-result.css,widget/toast.css"/>
+
+    <!-- js -->
+    <script src="https://a.alipayobjects.com/g/antui/antui/10.0.18/antui.js"></script>
+    <title>在线支付</title>
+</head>
+<body>
+<div class="widget-demo-show-panel">
+    <div class="demo demo-list">
+        <form action="__INCLUDE__/proxy_pay.php" method="post">
+
+            <input type="hidden" name="user_name" value="">
+
+            <div class="am-list am-list-form">
+                <div class="am-list-header">充值</div>
+                <div class="am-list-body">
+                    <div class="am-list-item am-input-autoclear">
+                        <div class="am-list-label" id="list-label-1">充值金额</div>
+                        <div class="am-list-control">
+                            <input name="amount" id="demo-input-1" type="text" placeholder="金额" value=""
+                                   aria-labelledby="list-label-1">
+                        </div>
+                        <div class="am-list-clear" tabindex="0" aria-label="清空输入框" aria-controls="demo-input-1">
+                            <i class="am-icon-clear am-icon" aria-hidden="true"></i>
+                        </div>
+                        <div class="am-list-button">
+                            <button type="button" disabled="disabled">元</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="am-list twoline">
+                <div class="am-list-header" id="demo-radio-header-2">选择支付方式</div>
+                <div class="am-list-body" id="demo-radio-header-2">
+                    <label class="am-list-item radio">
+                        <div class="am-list-thumb">
+                            <img
+                                    src="__IMAGES__/alipay_logo.png"
+                                    alt="支付宝支付"
+                            />
+                        </div>
+                        <div class="am-list-content">
+                            <div class="am-list-title">支付宝</div>
+                            <div class="am-list-brief">推荐</div>
+                        </div>
+                        <div class="am-checkbox middle">
+                            <input type="radio" name="action" value="alipay_pc" checked="checked">
+                            <span class="icon-check" aria-hidden="true"></span>
+                        </div>
+                    </label>
+                    <label class="am-list-item radio">
+                        <div class="am-list-thumb">
+                            <img
+                                    src="__IMAGES__/icon64_wx_logo.png"
+                                    alt="微信支付"
+                            />
+                        </div>
+                        <div class="am-list-content">
+                            <div class="am-list-title">微信支付</div>
+                            <div class="am-list-brief"></div>
+                        </div>
+                        <div class="am-checkbox middle">
+                            <input type="radio" name="action" value="weixin_h5">
+                            <span class="icon-check" aria-hidden="true"></span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="am-button-wrap">
+                <button type="submit" class="am-button" style="background-color: rgb(76,218,100)">立即支付</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script charset="utf-8" src="__JS__/jquery.min.js"></script>
+<script charset="utf-8" src="__JS__/common.js"></script>
+<script>
+    $(function () {
+        $("input[name='user_name']").val('{$Request.param.mac}');
+    })
+</script>
+</body>
+</html>

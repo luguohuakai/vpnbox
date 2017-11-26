@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <!--<link rel="stylesheet" type="text/css" href="dist/antui.min.css" media="all">-->
+    <!-- 主文件 -->
+    <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/antui.css"/>
+
+    <!-- 组件 -->
+    <link rel="stylesheet"
+          href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/??widget/message.css,widget/loading.css,widget/switch.css,widget/card.css,icon/message.css,widget/notice.css,widget/page-result.css,widget/toast.css"/>
+
+    <!-- js -->
+    <script charset="utf-8" src="__JS__/jquery.min.js"></script>
+    <script charset="utf-8" src="__JS__/common.js"></script>
+    <script src="https://a.alipayobjects.com/g/antui/antui/10.0.18/antui.js"></script>
+
+    <title>欢迎使用深澜 SRUNBOX</title>
+</head>
+<body>
+<div class="widget-demo-show-panel" style="display: block">
+    <div class="demo demo-list">
+
+
+
+        <div class="am-list">
+            <div class="am-list-header">产品列表</div>
+            <div id="product_list"></div>
+        </div>
+
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var str = '';
+        post(
+            // 'qr/get-products-list',
+            'qr/list',
+            {user_name:SS('user_name')},
+            function (e) {
+                var all_product = e.all_product;
+                var ordered_product = e.ordered_product;
+                for (var  all_id in all_product){
+                    var _checked = '';
+                    for (var ordered_id in ordered_product){
+                        if(ordered_id == all_id){
+                            _checked = 'checked="checked"';
+                        }
+                    }
+                    str += "            <div class=\"am-list-body\">\n" +
+                        "                <div class=\"am-list-item\">\n" +
+                        "                    <div class=\"am-list-content\">"+ all_product[all_id] +"</div>\n" +
+                        "                    <div class=\"am-switch\">\n" +
+                        "                        <input type=\"checkbox\" name=\"s1\" class=\"am-switch-checkbox\" "+ _checked +">\n" +
+                        "                        <label class=\"am-switch-label\">\n" +
+                        "                            <div class=\"am-switch-inner\"></div>\n" +
+                        "                            <div class=\"am-switch-switch\"></div>\n" +
+                        "                        </label>\n" +
+                        "                    </div>\n" +
+                        "                </div>\n" +
+                        "            </div>";
+                }
+                $('#product_list').append(str);
+            }
+        );
+    })
+</script>
+</body>
+
+</html>

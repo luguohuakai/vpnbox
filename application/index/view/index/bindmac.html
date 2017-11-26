@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <!--<link rel="stylesheet" type="text/css" href="dist/antui.min.css" media="all">-->
+    <!-- 主文件 -->
+    <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/antui.css"/>
+
+    <!-- 组件 -->
+    <link rel="stylesheet"
+          href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/??widget/message.css,widget/loading.css,widget/card.css,icon/message.css,widget/notice.css,widget/page-result.css,widget/toast.css"/>
+
+    <!-- js -->
+    <script charset="utf-8" src="./js/jquery.min.js"></script>
+    <script charset="utf-8" src="./js/common.js"></script>
+    <script src="https://a.alipayobjects.com/g/antui/antui/10.0.18/antui.js"></script>
+
+    <title>欢迎使用深澜 SRUNBOX</title>
+</head>
+<body>
+<div class="widget-demo-show-panel" style="display: block">
+    <div class="demo demo-list">
+        <!-- 把ant ui的代码粘贴到这下面就行了 -->
+        <form action="bindmachandle" method="post">
+
+            <div class="am-message result" role="alert">
+                <div class="am-message-main">请填写设备Mac</div>
+            </div>
+            <div class="am-list am-list-form">
+                <div class="am-list-header"></div>
+                <div class="am-list-body">
+                    <div class="am-list-item am-input-autoclear">
+                        <!--<div class="am-list-label" id="list-label-1">标签文本</div>-->
+                        <div class="am-list-control">
+                            <input id="new_pass" name="mac" required="required" type="text" placeholder="请填写Mac" value="" aria-labelledby="list-label-1">
+                        </div>
+                        <div class="am-list-clear" tabindex="0" aria-label="清空输入框" aria-controls="demo-input-1">
+                            <i class="am-icon-clear am-icon" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="am-button-wrap">
+                <button class="am-button blue" type="submit" id="submit" role="button">绑定</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 整页加载 -->
+<div class="am-loading page" style="display: none">
+    <i class="am-icon loading" aria-hidden="true"></i>
+    <div class="am-loading-text">加载中</div>
+</div>
+
+</body>
+
+</html>
