@@ -93,6 +93,12 @@
 
 <script type="text/javascript">
     $(function () {
+        // 保存user_name
+        SS('user_name','{$mac}');
+        if (SS('user_name') === null || SS('user_name') === ''){
+            SS('user_name','{$Request.param.mac}');
+        }
+
         $('.widget-demo-show-panel').hide();
         $('.am-loading').show();
         $.post(

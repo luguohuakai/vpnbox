@@ -78,16 +78,16 @@ class Test extends Base
                             'name' => 'Box充值',
                             'url' => url('/index/index/payway','',false,true),
                         ],
-                        [
-                            'type' => 'view',
-                            'name' => '查看session',
-                            'url' => url('/index/test/sessionlist','',false,true),
-                        ],
-                        [
-                            'type' => 'view',
-                            'name' => '清除session',
-                            'url' => url('/index/test/clearsession','',false,true),
-                        ],
+//                        [
+//                            'type' => 'view',
+//                            'name' => '查看session',
+//                            'url' => url('/index/test/sessionlist','',false,true),
+//                        ],
+//                        [
+//                            'type' => 'view',
+//                            'name' => '清除session',
+//                            'url' => url('/index/test/clearsession','',false,true),
+//                        ],
                     ]
                 ],
                 [
@@ -97,12 +97,13 @@ class Test extends Base
                 ]
             ]
         ];
-        $menu = json_encode($menu,JSON_UNESCAPED_UNICODE);
+        $menu_json = json_encode($menu,JSON_UNESCAPED_UNICODE);
 
         $api = "cgi-bin/menu/create?access_token=$token";
 
-        $res = post($wx_domain . $api,$menu);
-        dd($res);
+        $res = post($wx_domain . $api,$menu_json);
+        dump($res);
+        dd($menu);
     }
 
     // 清除session

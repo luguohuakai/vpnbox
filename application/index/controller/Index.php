@@ -20,12 +20,24 @@ class Index extends Base
 
     // 支付页面
     public function payWay(){
-        return view('payway');
+        // 先看是否已经绑定
+        $rs = Db::table('users')->where('wx_open_id',session('wx_open_id'))->value('user_name');
+        if ($rs){
+            return view('payway',['mac' => $rs]);
+        }else{
+            return view('bindmac');
+        }
     }
 
     // 设置页面
     public function settings(){
-        return view('settings');
+        // 先看是否已经绑定
+        $rs = Db::table('users')->where('wx_open_id',session('wx_open_id'))->value('user_name');
+        if ($rs){
+            return view('settings',['mac' => $rs]);
+        }else{
+            return view('bindmac');
+        }
     }
 
     // 重置密码页面
@@ -51,35 +63,43 @@ class Index extends Base
 
     // 微信绑定设备mac页面
     public function bindMac(){
-        dump(session('wx_code'));
-        dump(session('wx_open_id'));
-        dump(session('wx_access_token'));
-        dump($this->domain);
-        dump($this->app_id);
-        dump($this->app_secret);
-        die;
-        return view('bindmac');
+        // 先看是否已经绑定
+        $rs = Db::table('users')->where('wx_open_id',session('wx_open_id'))->value('user_name');
+        if ($rs){
+            return view('index',['mac' => $rs]);
+        }else{
+            return view('bindmac');
+        }
     }
 
     // 微信绑定设备mac操作
     public function bindMacHandle(){
         $mac =  input('post.mac');
-        $this->success('绑定成功' . $mac,url('index',['mac' => $mac]));
-        $open_id = session('open_id') ? session('open_id') : '';
-        if ($open_id){
-            // 去绑定
-            try{
-                $rs = Db::table('users')->where('user_name',$mac)->setField('wx_open_id',$open_id);
-            }catch (Exception $e){
-                $this->error($e->getMessage());
-            }
-            if ($rs !== false){
-                $this->success('绑定成功' . $mac,url('index',['mac' => $mac]));
+        // 先看之前是否绑定过了
+        $wx_open_id = Db::table('users')->where('user_name',$mac)->value('wx_open_id');
+        if($wx_open_id){
+            if ($wx_open_id == session('wx_open_id')){
+                $this->error('您已经绑定过了');
             }else{
-                $this->error('绑定失败' . $mac);
+                $this->error('此Box已经绑定过了');
             }
         }else{
-            $this->error('没有获取到open_id' . $mac);
+            $open_id = session('wx_open_id') ? session('wx_open_id') : '';
+            if ($open_id){
+                // 去绑定
+                try{
+                    $rs = Db::table('users')->where('user_name',$mac)->setField('wx_open_id',$open_id);
+                }catch (Exception $e){
+                    $this->error($e->getMessage());
+                }
+                if ($rs){
+                    $this->success('绑定成功' . $mac,url('index',['mac' => $mac]));
+                }else{
+                    $this->error('绑定失败' . $mac);
+                }
+            }else{
+                $this->error('没有获取到open_id' . $mac);
+            }
         }
     }
 

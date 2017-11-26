@@ -92,12 +92,14 @@
     // box状态检测
     $(function () {
         // 保存user_name
-        if (SS('user_name') === null){
+        SS('user_name','{$mac}');
+        if (SS('user_name') === null || SS('user_name') === ''){
             SS('user_name','{$Request.param.mac}');
         }
+
         $.post(
             "__INCLUDE__/proxy.php",
-            {interface:'qr/check',mac:'{$Request.param.mac}'},
+            {interface:'qr/check',mac:SS('user_name')},
             function (e) {
                 $('.am-loading').hide();
                 if (e.code === 200) {
