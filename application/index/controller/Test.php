@@ -17,7 +17,9 @@ class Test extends Base
         // 验证一次基本就不用了
 
 //        $url = 'http://47.104.1.91/index/index/checksignature'; // 正式服
-        $url = 'http://39.104.51.121/index/index/checksignature'; // 测试服
+//        $url = 'http://wx.srun.com/index/index/checksignature'; // 正式服
+//        $url = 'http://39.104.51.121/index/index/checksignature'; // 测试服
+        $url = 'http://test.srun.com/index/index/checksignature'; // 测试服
         $token = '5rrwbnib5dzss3tf9kn97s1rijszcwff';
         $EncodingAESKey = 'n7XdcDFZWsM8XUr8MvdTAsTwq9zoZbAXPEGyyPSxQgM';
 
@@ -42,9 +44,6 @@ class Test extends Base
         $token = $rs['access_token'];
         $app_id = config('wx.app_id');
         $wx_domain = config('wx.domain');
-
-        $view_device_redirect_uri = urlencode("http://39.104.51.121/index/index/bindmac");
-        $view_device = $wx_domain . "connect/oauth2/authorize?appid=$app_id&redirect_uri=$view_device_redirect_uri&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
 
         $menu = [
             'button' => [

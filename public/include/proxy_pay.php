@@ -8,8 +8,10 @@
 
 require_once './function.php';
 
-$host_9999 = 'http://47.104.1.91:9999/';
-$host_8080 = 'https://47.104.1.91:8080/api/';
+//$host_9999 = 'http://47.104.1.91:9999/';
+$host_9999 = 'http://wx.srun.com:9999/';
+//$host_8080 = 'https://47.104.1.91:8080/api/';
+$host_8080 = 'https://wx.srun.com:8080/api/';
 $_POST['interface'] = 'service_demo/pay.php'; // 支付接口
 
 //$_POST['subject'] = iconv('UTF-8','GBK//IGNORE','SRUNBOX充值'); // 充值项名称
@@ -49,7 +51,7 @@ if ($count > 1 && isset($_POST['interface'])) {
         echo $rs['form']; // 输出支付宝充值表单
     }elseif($_POST['action'] == 'weixin_h5'){
         // 调用微信APP支付
-        header("Location:" . $rs['form']."&redirect_url=" . urlencode('http://47.104.1.91/pay_result.html?out_trade_no=' . $rs['out_trade_no'] . '&mac=' . $_POST['user_name']));
+        header("Location:" . $rs['form']."&redirect_url=" . urlencode('http://wx.srun.com/index/index/payresult.html?out_trade_no=' . $rs['out_trade_no'] . '&mac=' . $_POST['user_name']));
     }else{
         dd($rs);
     }

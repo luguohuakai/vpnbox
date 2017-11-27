@@ -267,6 +267,7 @@ return [
     // | my设置
     // +----------------------------------------------------------------------
     'my' => [
-        'domain' => 'http://test.srun.com/',
+        'test_domain' => 'http://test.srun.com/', // 测试服
+        'wx_domain' => 'http://wx.srun.com/', // 正式服
     ]
 ];
