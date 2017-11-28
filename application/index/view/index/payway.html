@@ -96,7 +96,6 @@
         if (SS('user_name') === null || SS('user_name') === ''){
             SS('user_name','{$Request.param.mac}');
         }
-
         $("input[name='user_name']").val(SS('user_name'));
     })
 </script>

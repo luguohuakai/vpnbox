@@ -44,6 +44,11 @@ class Index extends Base
     public function resetpassword(){
         return view('resetpassword');
     }
+
+    // 重置密码页面
+    public function infor(){
+        return view('infor');
+    }
     // 设定使用期限页面
     public function setstoptime(){
         return view('setstoptime');
