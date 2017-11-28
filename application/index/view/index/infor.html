@@ -78,72 +78,72 @@
 
 <script type="text/javascript">
 
-    $(function () {
-        $.post(
-            './include/proxy.php',
-            {interface:'v2/get-vpn-detail'},
-            function (e) {
-                console.log(e);
-                if(e.code === 200){
-                    toast_show(e.msg,'success');
-                    $('#current_server').html(e.current_server);
-                    $('#current_network').html(e.current_work_lan);
-                    $.each(e.all_server,function(index,value){
-                        new_obj = $("<li>value<>");
-                        $('#ul').append(new_obj);
-                        console.log("下标:"+index+"值:"+value);
-                    });
-                    $.each(e.all_work_lan,function(index,value){
-                        new_obj1 = $("<li>value<>");
-                        $('#oul').append(new_obj1);
-                        console.log("下标:"+index+"值:"+value);
-                    });
-                    /*   for(var i=0;i<e.all_server.length;i++){
-                           var oli=document.createElement('li');
-                           oli.innerHTML+='<p>'+e.all_server[i]+'</p>';
-                           alert(e.all_server[i]);
-                           ul.appendChild(oli);
-                       }*/
-                    /*  for(var j=0;j<e.all_work_lan.length;j++){
-                          var oli1=document.createElement('li');
-                          oli1.innerHTML+='<p>'+e.all_work_lan[j]+'</p>';
-                          alert(e.all_work_lan[j]);
-                          oul.appendChild(oli1);
-                      }*/
-                }else {
-                    toast_show(e.msg);
-                }
-            },'json'
-        );
-
-//        $('#is_enable').click(function () {
-//            var stop = false;
-//            var old_status = $(this).attr('checked');
-//            post(
-//                'v2/re-connect-vpn',
-//                {user_name: SS('user_name')},
-//                function (e) {
-//                    console.log(e);
-//                    toast_hide();
-//                    if(e.code === 200){
-//                        toast_show(e.msg);
-//                    }
-//                    if (e.code !== 4000) {
-//                        stop = true;
-//                        return false;
-//                    }
-//                },false
-//            );
-//            if(stop){
-//                return false;
-//            }
-//            if (old_status === 'checked') {
-//                $(this).attr('checked', false)
-//            } else {
-//                $(this).attr('checked', true)
-//            }
-//        });
-    })
+//    $(function () {
+//        $.post(
+//            './include/proxy.php',
+//            {interface:'v2/get-vpn-detail'},
+//            function (e) {
+//                console.log(e);
+//                if(e.code === 200){
+//                    toast_show(e.msg,'success');
+//                    $('#current_server').html(e.current_server);
+//                    $('#current_network').html(e.current_work_lan);
+//                    $.each(e.all_server,function(index,value){
+//                        new_obj = $("<li>value<>");
+//                        $('#ul').append(new_obj);
+//                        console.log("下标:"+index+"值:"+value);
+//                    });
+//                    $.each(e.all_work_lan,function(index,value){
+//                        new_obj1 = $("<li>value<>");
+//                        $('#oul').append(new_obj1);
+//                        console.log("下标:"+index+"值:"+value);
+//                    });
+//                    /*   for(var i=0;i<e.all_server.length;i++){
+//                           var oli=document.createElement('li');
+//                           oli.innerHTML+='<p>'+e.all_server[i]+'</p>';
+//                           alert(e.all_server[i]);
+//                           ul.appendChild(oli);
+//                       }*/
+//                    /*  for(var j=0;j<e.all_work_lan.length;j++){
+//                          var oli1=document.createElement('li');
+//                          oli1.innerHTML+='<p>'+e.all_work_lan[j]+'</p>';
+//                          alert(e.all_work_lan[j]);
+//                          oul.appendChild(oli1);
+//                      }*/
+//                }else {
+//                    toast_show(e.msg);
+//                }
+//            },'json'
+//        );
+//
+////        $('#is_enable').click(function () {
+////            var stop = false;
+////            var old_status = $(this).attr('checked');
+////            post(
+////                'v2/re-connect-vpn',
+////                {user_name: SS('user_name')},
+////                function (e) {
+////                    console.log(e);
+////                    toast_hide();
+////                    if(e.code === 200){
+////                        toast_show(e.msg);
+////                    }
+////                    if (e.code !== 4000) {
+////                        stop = true;
+////                        return false;
+////                    }
+////                },false
+////            );
+////            if(stop){
+////                return false;
+////            }
+////            if (old_status === 'checked') {
+////                $(this).attr('checked', false)
+////            } else {
+////                $(this).attr('checked', true)
+////            }
+////        });
+//    })
 </script>
 </body>
 
