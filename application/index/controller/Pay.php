@@ -14,17 +14,17 @@ class Pay extends Base
         if ($rs){
             return view('index',['mac' => $rs]);
         }else{
-            $this->redirect('/index/index/bindmac');
+            $this->redirect(url('/index/index/bindmac'));
         }
     }
 
     // 支付后返回页面 return_url
     public function Returnurl(){
-
+        return view('returnurl');
     }
 
     // 支付回调接口 notify_url
     public function Notifyurl(){
-
+        // 微信回调
     }
 }
