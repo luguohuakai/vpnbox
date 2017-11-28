@@ -75,7 +75,7 @@ class Test extends Base
                         [
                             'type' => 'view',
                             'name' => 'Box充值',
-                            'url' => url('/index/index/payway','',false,true),
+                            'url' => url('/index/pay/index','',false,true),
                         ],
 //                        [
 //                            'type' => 'view',
