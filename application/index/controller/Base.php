@@ -23,6 +23,8 @@ class Base extends Controller
         'index/test/checksignature',
         'index/test/index',
         'index/test/setmenu',
+        'index/pay/test',
+        'index/pay/payrequest',
         '',
     ];
 

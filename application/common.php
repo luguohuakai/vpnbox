@@ -76,7 +76,7 @@ if (!function_exists('L')) {
      */
     function L($msg, $file_name)
     {
-        $log_path = __DIR__ . '/../../center/runtime/logs/';
+        $log_path = ROOT_PATH . 'runtime/log/';
         $file_name_arr = explode('/',$file_name);
         if(count($file_name_arr) > 1){
             if (!is_dir($log_path . $file_name_arr[0])){
@@ -85,7 +85,7 @@ if (!function_exists('L')) {
         }
         $msg = date('Y-m-d H:i:s')
             . "\r\n" . $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']
-            . "\r\n" . Yii::$app->controller->module->id . '/' . Yii::$app->controller->id . '/' . Yii::$app->controller->action->id
+            . "\r\n" . 'modual' . '/' . 'controller' . '/' . 'action'
             . "\r\n输出信息:" . $msg
             . "\r\n\r\n";
         error_log($msg, 3, $log_path . $file_name . '_' . date('Y-m-d') . '.txt');
