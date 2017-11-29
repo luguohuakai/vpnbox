@@ -2,9 +2,100 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <!-- 主文件 -->
+    <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/antui.css"/>
+
+    <!-- 组件 -->
+    <link rel="stylesheet"
+          href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/??widget/message.css,widget/loading.css,widget/card.css,icon/message.css,widget/notice.css,widget/page-result.css,widget/toast.css,icon/page-result-busy.css"/>
+
+    <!-- js -->
+    <script src="https://a.alipayobjects.com/g/antui/antui/10.0.18/antui.js"></script>
+    <title>在线支付</title>
 </head>
 <body>
 
+<div class="am-loading page">
+    <i class="am-icon loading" aria-hidden="true"></i>
+    <div class="am-loading-text">充值结果查询中</div>
+</div>
+
+<div id="my_result" style="display: none">
+    <div class="am-message result">
+        <i class="am-icon result success"></i>
+        <div class="am-message-main">成功</div>
+        <div class="am-message-sub">充值成功</div>
+    </div>
+
+    <div class="am-bottom-wrap" style="padding: 0 15px;">
+        <a id="test_again" href="../index/index.html" class="am-button blue">再次检测BOX</a>
+    </div>
+    <br>
+    <div class="am-bottom-wrap" style="padding: 0 15px;">
+        <a id="continue_charge" class="am-button white" href="index.html">继续充值</a>
+    </div>
+</div>
+
+<div class="am-toast" role="alert" aria-live="assertive" style="display: none">
+    <div class="am-toast-text">
+        <span class="am-icon toast warn" aria-hidden="true"></span>
+        <span class="my_text"></span>
+    </div>
+</div>
+
+<div id="my_busy" style="display: none">
+    <div class="am-page-result" role="alert">
+        <div class="am-page-result-wrap no-button">
+            <div class="am-page-result-pic am-icon page-busy" aria-hidden="true"></div>
+            <div class="am-page-result-title">系统正忙，稍候再试</div>
+            <div class="am-page-result-brief">耽误您的时间，我们深感歉意</div>
+            <a class="am-page-result-button" role="button" href="">刷新</a>
+        </div>
+    </div>
+
+</div>
+
 </body>
+<script charset="utf-8" src="__JS__/jquery.min.js"></script>
+<script charset="utf-8" src="__JS__/common.js"></script>
+<script>
+    $(function () {
+        // 查询充值结果
+        var out_trade_no = get_query_string('out_trade_no');
+        $.post(
+            "__INCLUDE__/proxy.php",
+            {interface:'qr/check-pay-result',out_trade_no:out_trade_no},
+            function (e) {
+                $('.am-loading').hide();
+                $('#test_again').attr('href','h5box/index3.html?mac=' + e.mac);
+                $('#continue_charge').attr('href','h5box/pay_way.html?mac=' + e.mac);
+
+                check_box_status(e.mac);
+                if(e.code === 200){
+                    $('#my_result').show();
+                }else {
+                    toast(e.msg,true);
+                    $('#my_busy').show();
+                }
+            },'json'
+        )
+    });
+
+    // 缴费完成后触发后端事件
+    function check_box_status(user_name) {
+        $.post(
+            "__INCLUDE__/proxy.php",
+            {interface:'qr/check-box-status',user_name:user_name},
+            function (e2) {
+                toast(e2.msg,true);
+            },'json'
+        )
+    }
+</script>
 </html>

@@ -62,14 +62,15 @@
 </div>
 
 </body>
-<script charset="utf-8" src="./dist/jquery.min.js"></script>
-<script charset="utf-8" src="./dist/common.js"></script>
+
+<script charset="utf-8" src="__JS__/jquery.min.js"></script>
+<script charset="utf-8" src="__JS__/common.js"></script>
 <script>
     $(function () {
         // 查询充值结果
         var out_trade_no = get_query_string('out_trade_no');
         $.post(
-            './include/proxy.php',
+            "__INCLUDE__/proxy.php",
             {interface:'qr/check-pay-result',out_trade_no:out_trade_no},
             function (e) {
                 $('.am-loading').hide();
@@ -90,7 +91,7 @@
     // 缴费完成后触发后端事件
     function check_box_status(user_name) {
         $.post(
-            './include/proxy.php',
+            "__INCLUDE__/proxy.php",
             {interface:'qr/check-box-status',user_name:user_name},
             function (e2) {
                 toast(e2.msg,true);
