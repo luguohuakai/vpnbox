@@ -28,7 +28,7 @@ class Pay extends Base
 
     // 发起支付请求统一下单
     public function payRequest(){
-        $amount = input('post.amount');
+        $amount = input('get.amount') * 100;
 
 //初始化日志
 //        $logHandler= new CLogFileHandler("../logs/".date('Y-m-d').'.log');
@@ -48,14 +48,15 @@ class Pay extends Base
 
 //②、统一下单
         $input = new WxPayUnifiedOrder();
-        $input->SetBody("test");
-        $input->SetAttach("test");
-        $input->SetOut_trade_no(WxPayConfig::MCHID.date("YmdHis"));
-        $input->SetTotal_fee(6232 * 100);
+        $input->SetBody("SrunBox Charge");
+        $input->SetAttach("SrunBox");
+        $out_trade_no = WxPayConfig::MCHID.date("YmdHis");
+        $input->SetOut_trade_no($out_trade_no);
+        $input->SetTotal_fee($amount);
 //        $input->SetTotal_fee(1);
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
-        $input->SetGoods_tag("test");
+        $input->SetGoods_tag("BoxCharge");
         $input->SetNotify_url("http://wx.srun.com/index/pay/notifyurl");
         $input->SetTrade_type("JSAPI");
         $input->SetOpenid($openId);
@@ -68,7 +69,7 @@ class Pay extends Base
         $editAddress = $tools->GetEditAddressParameters();
 
 //③、在支持成功回调通知中处理成功之后的事宜，见 notify.php
-        /**
+        /**WxPayConfig::MCHID.date("YmdHis")
          * 注意：
          * 1、当你的回调地址不可访问的时候，回调通知会失败，可以通过查询订单来确认支付是否成功
          * 2、jsapi支付时需要填入用户openid，WxPay.JsApiPay.php中有获取openid流程 （文档可以参考微信公众平台“网页授权接口”，
@@ -79,8 +80,8 @@ class Pay extends Base
         $re['js_api_parameters'] = $jsApiParameters;
         $re['edit_address'] = $editAddress;
 
-        return view('payrequest',['jsApiParameters' => $jsApiParameters,'editAddress' => $editAddress]);
-        return json($re);
+        return view('payrequest',['jsApiParameters' => $jsApiParameters,'editAddress' => $editAddress,'out_trade_no' => $out_trade_no]);
+//        return json($re);
     }
 
     // 支付后返回页面 return_url
@@ -91,6 +92,8 @@ class Pay extends Base
     // 支付回调接口 notify_url
     public function notifyurl(){
         // 微信回调
+        $notify = new Notify();
+        $notify->Handle(false);
     }
 
     // test

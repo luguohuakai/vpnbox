@@ -33,7 +33,7 @@
 <body>
 <div class="widget-demo-show-panel">
     <div class="demo demo-list">
-        <form action="__INCLUDE__/proxy_pay.php" method="post">
+        <form action="/index/pay/payrequest" method="get">
 
             <input type="hidden" name="user_name" value="">
 
@@ -43,10 +43,10 @@
                     <div class="am-list-item am-input-autoclear">
                         <div class="am-list-label" id="list-label-1">充值金额</div>
                         <div class="am-list-control">
-                            <input name="amount" id="demo-input-1" type="text" placeholder="金额" value=""
+                            <input name="amount" id="amount" type="text" placeholder="金额" value=""
                                    aria-labelledby="list-label-1">
                         </div>
-                        <div class="am-list-clear" tabindex="0" aria-label="清空输入框" aria-controls="demo-input-1">
+                        <div class="am-list-clear" tabindex="0" aria-label="清空输入框" aria-controls="amount">
                             <i class="am-icon-clear am-icon" aria-hidden="true"></i>
                         </div>
                         <div class="am-list-button">
@@ -56,15 +56,15 @@
                 </div>
             </div>
             <div class="am-list k_cz">
-                <button class="am-button tiny" style="width: 100px; height:40px;">20元</button>
-                <button class="am-button tiny" style="width: 100px; height:40px;">30元</button>
-                <button class="am-button tiny" style="width: 100px; height:40px;">50元</button>
-                <button class="am-button tiny" style="width: 100px; height:40px;">80元</button>
-                <button class="am-button tiny" style="width: 100px; height:40px;">100元</button>
-                <button class="am-button tiny" style="width: 100px; height:40px;">200元</button>
+                <button type="button" value="10" class="am-button tiny" style="width: 100px; height:40px;">10元</button>
+                <button type="button" value="20" class="am-button tiny" style="width: 100px; height:40px;">20元</button>
+                <button type="button" value="50" class="am-button tiny" style="width: 100px; height:40px;">50元</button>
+                <button type="button" value="100" class="am-button tiny" style="width: 100px; height:40px;">100元</button>
+                <button type="button" value="200" class="am-button tiny" style="width: 100px; height:40px;">200元</button>
+                <button type="button" value="500" class="am-button tiny" style="width: 100px; height:40px;">500元</button>
             </div>
             <div class="am-button-wrap" style="width:90%;">
-                <button type="submit" class="am-button">立即支付</button>
+                <button type="submit" id="pay" class="am-button">立即支付</button>
             </div>
         </form>
     </div>
@@ -79,7 +79,25 @@
             SS('user_name','');
         }
         $("input[name='user_name']").val(SS('user_name'));
-    })
+    });
+
+    $('.tiny').click(function () {
+        $('#amount').val($(this).val());
+    });
+
+    // 支付
+//    $('#pay').click(function () {
+//        alert('slkdj');
+//        $.post(
+//            '/index/pay/payrequest',
+//            {amount:$('#amount').val()},
+//            function (e) {
+//                console.log(e);
+//                alert('good');
+//                callpay(e.js_api_parameters);
+//            },'json'
+//        )
+//    })
 </script>
 </body>
 </html>

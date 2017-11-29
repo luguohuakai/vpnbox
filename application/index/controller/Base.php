@@ -24,7 +24,9 @@ class Base extends Controller
         'index/test/index',
         'index/test/setmenu',
         'index/pay/test',
+        'index/pay/index',
         'index/pay/payrequest',
+        'index/pay/notifyurl',
         '',
     ];
 
