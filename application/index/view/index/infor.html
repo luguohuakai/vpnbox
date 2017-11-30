@@ -20,7 +20,27 @@
     <script charset="utf-8" src="__JS__/common.js"></script>
     <script src="https://a.alipayobjects.com/g/antui/antui/10.0.18/antui.js"></script>
     <title>欢迎使用深澜 SRUNBOX</title>
-
+    <style>
+        .select li, .current{
+           width: 90%;
+            text-indent:5%;
+            height:35px;
+            margin: 0 auto;
+            line-height: 35px;
+        }
+        .select{
+            margin-bottom: 20px;
+        }
+        /*.am-list-content{*/
+            /*background-color: #0E8EE7;*/
+            /*color: #fff;*/
+            /*border-radius: 10px;*/
+            /*text-indent: 15px;*/
+        /*}*/
+        /*.select li{*/
+            /*border-bottom: 1px solid #cccccc;*/
+        /*}*/
+    </style>
 </head>
 <body>
 <div class="widget-demo-show-panel" style="display: block">
@@ -46,31 +66,45 @@
                 <div >
                     <div class="am-list-item">
                         <div class="am-list-content">可用server</div>
-                        <div class="am-list-extra" id="all_server"></div>
+                        <!--<div class="am-list-extra" id="all_server"></div>-->
                     </div>
                     <div class="select">
                         <ul id="ul">
-
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
                         </ul>
                     </div>
                 </div>
-                <div class="am-list-item">
-                    <div class="am-list-content">当前server</div>
-                    <div class="am-list-extra" id="current_server"></div>
-                </div>
+               <div>
+                   <div class="am-list-item">
+                       <div class="am-list-content">当前server</div>
+                       <!--<div class="am-list-extra" id="current_server"></div>-->
+                   </div>
+                   <div class="current"></div>
+               </div>
                 <div>
                     <div class="am-list-item">
                         <div class="am-list-content">可用网段</div>
-                        <div class="am-list-extra" id="Available_network"></div>
+                        <!--<div class="am-list-extra" id="Available_network"></div>-->
                     </div>
-                    <ul id="oul">
-
-                    </ul>
+                  <div class="select">
+                      <ul id="oul">
+                          <li></li>
+                          <li></li>
+                          <li></li>
+                          <li></li>
+                      </ul>
+                  </div>
                 </div>
-                <div class="am-list-item">
-                    <div class="am-list-content">当前网段</div>
-                    <div class="am-list-extra" id="current_network"></div>
-                </div>
+               <div>
+                   <div class="am-list-item">
+                       <div class="am-list-content">当前网段</div>
+                       <!--<div class="am-list-extra" id="current_network"></div>-->
+                   </div>
+                   <div class="current"></div>
+               </div>
             </div>
         </div>
     </div>
@@ -79,42 +113,6 @@
 <script type="text/javascript">
 
     $(function () {
-        $.post(
-            "__INCLUDE__/proxy.php",
-            {interface:'v2/get-vpn-detail'},
-            function (e) {
-                console.log(e);
-                if(e.code === 200){
-                    toast_show(e.msg,'success');
-                    $('#current_server').html(e.current_server);
-                    $('#current_network').html(e.current_work_lan);
-                    $.each(e.all_server,function(index,value){
-                        new_obj = $("<li>value<>");
-                        $('#ul').append(new_obj);
-                        console.log("下标:"+index+"值:"+value);
-                    });
-                    $.each(e.all_work_lan,function(index,value){
-                        new_obj1 = $("<li>value<>");
-                        $('#oul').append(new_obj1);
-                        console.log("下标:"+index+"值:"+value);
-                    });
-                    /*   for(var i=0;i<e.all_server.length;i++){
-                           var oli=document.createElement('li');
-                           oli.innerHTML+='<p>'+e.all_server[i]+'</p>';
-                           alert(e.all_server[i]);
-                           ul.appendChild(oli);
-                       }*/
-                    /*  for(var j=0;j<e.all_work_lan.length;j++){
-                          var oli1=document.createElement('li');
-                          oli1.innerHTML+='<p>'+e.all_work_lan[j]+'</p>';
-                          alert(e.all_work_lan[j]);
-                          oul.appendChild(oli1);
-                      }*/
-                }else {
-                    toast_show(e.msg);
-                }
-            },'json'
-        );
 
        $('#able').click(function () {
            post(
