@@ -32,7 +32,7 @@
             <div class="am-list-header">设置</div>
             <div class="am-list-body">
                 <div class="am-list-item">
-                    <div class="am-list-content">是否启用</div>
+                    <div class="am-list-content">是否启用VPN</div>
                     <div class="am-switch">
                         <input type="checkbox" name="is_enable" id="is_enable" class="am-switch-checkbox">
                         <label class="am-switch-label">
@@ -43,6 +43,8 @@
                 </div>
             </div>
         </div>
+
+
         <div class="am-list">
 
             <a href="{:url('resetpassword')}" class="am-list-item">
@@ -55,16 +57,16 @@
             <a href="{:url('setstoptime')}" class="am-list-item">
                 <div style="padding-right: 10px;padding-top:8px;"><img src="__IMAGES__/set.png" style="width: 20px;height:20px;display: inline-block;"></div>
                 <div class="am-list-content">设定使用期限</div>
+                <div class="am-list-extra" id="user_expire_time"></div>
                 <span class="am-bubble reddot"></span>
                 <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
             </a>
 
-            <a href="{:url('changeproduct')}" class="am-list-item">
-                <div style="padding-right: 10px;padding-top:8px;"><img src="__IMAGES__/qh.jpg" style="width: 20px;height:20px;display: inline-block;"></div>
-                <div class="am-list-content">切换产品</div>
-                <span class="am-bubble reddot"></span>
-                <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
-            </a>
+            <!--<a href="{:url('changeproduct')}" class="am-list-item">-->
+                <!--<div class="am-list-content">切换产品</div>-->
+                <!--<span class="am-bubble reddot"></span>-->
+                <!--<div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>-->
+            <!--</a>-->
         </div>
 
         <!--<div class="am-list">-->
@@ -112,6 +114,7 @@
                     if (e.data === 0) {
                         $('#is_enable').attr('checked', true);
                     }
+                    $('#user_expire_time').html(e.user_expire_time);
                 }
             }, 'json'
         );
@@ -129,6 +132,7 @@
                 // 启用
                 status = 0;
             }
+
             var stop = false;
             post(
                 'qr/start-or-stop',

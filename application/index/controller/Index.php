@@ -80,9 +80,14 @@ class Index extends Base
     // 微信绑定设备mac操作
     public function bindMacHandle(){
         $mac =  input('post.mac');
-        // 先看此mac之前是否绑定过了
+        // 最先要确定此mac存在吗
+        $exist = Db::table('users')->where('user_name',$mac)->value('user_id');
+        if (!$exist){
+            $this->error('此Box不存在');
+        }
+        // 先看此Box之前是否被绑定过了
         $wx_open_id = Db::table('users')->where('user_name',$mac)->value('wx_open_id');
-        // 再看微信是否已绑定了
+        // 再看我(微信)是否已绑定了Box
         $user_name = Db::table('users')->where('wx_open_id',session('wx_open_id'))->value('user_name');
         if($wx_open_id){
             if ($wx_open_id == session('wx_open_id')){
@@ -95,22 +100,37 @@ class Index extends Base
             if ($open_id){
                 // 去绑定
                 try{
-                    // 先解绑之前的
+                    // 如果我已经绑定过 先解绑之前的Box
+                    $flag = true;
+                    Db::startTrans();
                     if($user_name){
-                        Db::table('users')->where('wx_open_id',session('wx_open_id'))->setField('wx_open_id','');
+                        $rs1 = Db::table('users')->where('wx_open_id',session('wx_open_id'))->setField('wx_open_id','');
+                        if(!$rs1){
+                            $flag = false;
+                        }
                     }
-                    $rs = Db::table('users')->where('user_name',$mac)->setField('wx_open_id',$open_id);
+                    if($flag){
+                        $rs2 = Db::table('users')->where('user_name',$mac)->setField('wx_open_id',$open_id);
+                        if ($rs2){
+                            Db::commit();
+                        }else{
+                            $flag = false;
+                            Db::rollback();
+                        }
+                    }else{
+                        Db::rollback();
+                    }
                 }catch (Exception $e){
                     $this->error($e->getMessage());
                 }
-                if ($rs){
+                if ($flag){
                     session('user_name',$mac);
-                    $this->success('绑定成功' . $mac,url('index',['mac' => $mac]));
+                    $this->success('绑定成功<br>' . $mac,url('index',['mac' => $mac]));
                 }else{
-                    $this->error('绑定失败' . $mac);
+                    $this->error('绑定失败<br>' . $mac);
                 }
             }else{
-                $this->error('没有获取到open_id' . $mac);
+                $this->error('没有获取到open_id<br>' . $mac);
             }
         }
     }
