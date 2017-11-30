@@ -69,35 +69,42 @@ class Index extends Base
     // 微信绑定设备mac页面
     public function bindMac(){
         // 先看是否已经绑定
-        $rs = Db::table('users')->where('wx_open_id',session('wx_open_id'))->value('user_name');
-        if ($rs){
-            return view('index',['mac' => $rs]);
-        }else{
+//        $rs = Db::table('users')->where('wx_open_id',session('wx_open_id'))->value('user_name');
+//        if ($rs){
+//            return view('index',['mac' => $rs]);
+//        }else{
             return view('bindmac');
-        }
+//        }
     }
 
     // 微信绑定设备mac操作
     public function bindMacHandle(){
         $mac =  input('post.mac');
-        // 先看之前是否绑定过了
+        // 先看此mac之前是否绑定过了
         $wx_open_id = Db::table('users')->where('user_name',$mac)->value('wx_open_id');
+        // 再看微信是否已绑定了
+        $user_name = Db::table('users')->where('wx_open_id',session('wx_open_id'))->value('user_name');
         if($wx_open_id){
             if ($wx_open_id == session('wx_open_id')){
-                $this->error('您已经绑定过了');
+                $this->error('您已经绑定过这个Box了');
             }else{
-                $this->error('此Box已经绑定过了');
+                $this->error('此Box已经被别人绑定了');
             }
         }else{
             $open_id = session('wx_open_id') ? session('wx_open_id') : '';
             if ($open_id){
                 // 去绑定
                 try{
+                    // 先解绑之前的
+                    if($user_name){
+                        Db::table('users')->where('wx_open_id',session('wx_open_id'))->setField('wx_open_id','');
+                    }
                     $rs = Db::table('users')->where('user_name',$mac)->setField('wx_open_id',$open_id);
                 }catch (Exception $e){
                     $this->error($e->getMessage());
                 }
                 if ($rs){
+                    session('user_name',$mac);
                     $this->success('绑定成功' . $mac,url('index',['mac' => $mac]));
                 }else{
                     $this->error('绑定失败' . $mac);

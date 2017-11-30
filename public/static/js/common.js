@@ -159,6 +159,7 @@ function delCookie(name)
 
 // 封装jQuery Ajax的post操作
 function post(url, data, success, async) {
+    var md5_password = CS('md5_password');
     data.interface = url;
     var proxy = '../../include/proxy.php';
     if(async === undefined){
@@ -171,7 +172,53 @@ function post(url, data, success, async) {
         dataType:'json',
         async:async,
         success:function (e) {
-            success(e);
+            // alert(CS('md5_password'));
+            // toast_show(e.msg);
+            // alert(SS('token'));
+            if(e.code === 40013){
+                post(
+                    'v2/login',
+                    {user_name:SS('user_name'),user_pass:md5_password},
+                    function (e2) {
+                        if (e2.code === 200){
+                            SS('token',e2.token);
+                            // 再次发起请求
+                            $.ajax({
+                                url:proxy,
+                                type:'POST',
+                                data:data,
+                                dataType:'json',
+                                async:async,
+                                success:function (e) {
+                                    if(e.code === 40013){
+                                        post(
+                                            'v2/login',
+                                            {user_name:SS('user_name'),user_pass:md5_password},
+                                            function (e2) {
+                                                if (e2.code === 200){
+                                                    SS('token',e2.token);
+                                                    // 再次发起请求
+                                                }else {
+                                                    alert(e2.msg);
+                                                }
+                                            }
+                                        )
+                                    }else {
+                                        success(e);
+                                    }
+                                },
+                                error:function (e) {
+                                    console.log(e);
+                                }
+                            })
+                        }else {
+                            alert(e2.msg);
+                        }
+                    }
+                )
+            }else {
+                success(e);
+            }
         },
         error:function (e) {
             console.log(e);

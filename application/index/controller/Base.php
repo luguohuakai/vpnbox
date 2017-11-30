@@ -48,6 +48,13 @@ class Base extends Controller
                 if ($rs){
                     session('uid',$rs['user_id']);
                     session('user_name',$rs['user_name']);
+                    $md5_password = Rwx(0)->hGet('hash:users:' . $rs['user_id'],'md5_password');
+                    session('md5_password',$md5_password);
+                    setcookie('md5_password',$md5_password);
+                }else{
+                    session('uid',null);
+                    session('user_name',null);
+                    session('md5_password',null);
                 }
             }catch (Exception $e){
                 $this->error($e->getMessage());

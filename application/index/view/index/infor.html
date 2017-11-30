@@ -107,10 +107,8 @@
        $('#able').click(function () {
            post(
                'v2/re-connect-vpn',
-               {user_name: SS('user_name')},
+               {token: SS('token')},
                function (e) {
-                   console.log(e);
-                    toast_hide();
                     if(e.code === 200){
                        toast_show(e.msg);
                    }
