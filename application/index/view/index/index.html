@@ -118,6 +118,7 @@
                     $('#is_vpn_sub').text('VPN 已正常连接');
                 } else if (e.code === 4001) {
 
+                    // 未联网的开始
                     $('#is_online_icon').addClass('am-icon result error');
                     $('#is_online_main').text('设备未联网');
                     $('#is_online_sub').text('请检查设备WAN口是否正确连接或是4G是否正常');
@@ -130,6 +131,7 @@
                     // $('#is_vpn_main').text('VPN 正常');
                     // $('#is_vpn_sub').text('VPN 已正常连接');
                     $('#is_vpn').hide();
+                    //未联网的结束
                 } else if (e.code === 4002) {
                     $('#is_online_icon').addClass('am-icon result wait');
                     $('#is_online_main').text('已接入');
@@ -144,7 +146,6 @@
                     // $('#is_vpn_sub').text('VPN 已正常连接');
                     $('#is_vpn').hide();
                 } else if (e.code === 4003) {
-
                     $('#is_online_icon').addClass('am-icon result success');
                     $('#is_online_main').text('已联网');
                     $('#is_online_sub').text('恭喜您已经成功接入SRUNBOX');
@@ -156,7 +157,6 @@
                     $('#is_vpn_icon').addClass('am-icon message error');
                     $('#is_vpn_main').text('VPN 连接异常');
                     $('#is_vpn_sub').text('请检查您的 VPN 设置');
-
                 } else {
                     toast('ooh my ga 网络异常', false);
                     return false;
