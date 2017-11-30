@@ -43,19 +43,17 @@
                 </div>
             </div>
         </div>
-
-
         <div class="am-list">
 
             <a href="{:url('resetpassword')}" class="am-list-item">
-                <div style="padding-right: 10px;padding-top:8px;"><img src="__IMAGES__/key.png"></div>
+                <div style="padding-right: 10px;padding-top:8px;"><img src="__IMAGES__/key.png" style="width: 20px;height:20px;display: inline-block;"></div>
                 <div class="am-list-content">重置密码</div>
                 <span class="am-bubble reddot"></span>
                 <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
             </a>
 
             <a href="{:url('setstoptime')}" class="am-list-item">
-                <div style="padding-right: 10px;padding-top:8px;"><img src="__IMAGES__/set.png"></div>
+                <div style="padding-right: 10px;padding-top:8px;"><img src="__IMAGES__/set.png" style="width: 20px;height:20px;display: inline-block;"></div>
                 <div class="am-list-content">设定使用期限</div>
                 <span class="am-bubble reddot"></span>
                 <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
@@ -69,21 +67,21 @@
             </a>
         </div>
 
-        <div class="am-list">
+        <!--<div class="am-list">-->
 
-            <div class="am-list-header">数据统计</div>
-            <a href="{:url('consumption')}" class="am-list-item">
-                <div class="am-list-content">消费统计</div>
-                <span class="am-bubble reddot"></span>
-                <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
-            </a>
+            <!--<div class="am-list-header">数据统计</div>-->
+            <!--<a href="{:url('consumption')}" class="am-list-item">-->
+                <!--<div class="am-list-content">消费统计</div>-->
+                <!--<span class="am-bubble reddot"></span>-->
+                <!--<div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>-->
+            <!--</a>-->
 
-            <a href="{:url('used')}" class="am-list-item">
-                <div class="am-list-content">使用量统计</div>
-                <span class="am-bubble reddot"></span>
-                <div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>
-            </a>
-        </div>
+            <!--<a href="{:url('used')}" class="am-list-item">-->
+                <!--<div class="am-list-content">使用量统计</div>-->
+                <!--<span class="am-bubble reddot"></span>-->
+                <!--<div class="am-list-arrow" aria-hidden="true"><span class="am-icon arrow horizontal"></span></div>-->
+            <!--</a>-->
+        <!--</div>-->
 
     </div>
 </div>
@@ -131,7 +129,6 @@
                 // 启用
                 status = 0;
             }
-
             var stop = false;
             post(
                 'qr/start-or-stop',
