@@ -28,7 +28,7 @@
     <div class="demo demo-list">
         <!-- 把ant ui的代码粘贴到这下面就行了 -->
         <form action="bindmachandle" method="post">
-
+            <input type="hidden" name="method" value="<?=isset($_GET['method']) ? $_GET['method'] : 1; ?>">
             <div class="am-message result" role="alert">
                 <div class="am-message-main">请填写要绑定设备的Mac地址</div>
                 <div id="is_online_sub_1" class="am-message-sub"><?=session('user_name') ? '当前已绑定:' . session('user_name') : '';?></div>
@@ -39,7 +39,16 @@
                     <div class="am-list-item am-input-autoclear">
                         <!--<div class="am-list-label" id="list-label-1">标签文本</div>-->
                         <div class="am-list-control">
-                            <input id="new_pass" name="mac" required="required" type="text" placeholder="请填写Mac地址" value="" aria-labelledby="list-label-1">
+                            <input id="new_pass" name="mac" required="required" type="text" placeholder="请填写Mac地址" value="<?=isset($_GET['mac']) ? $_GET['mac'] : ''; ?>" aria-labelledby="list-label-1">
+                        </div>
+                        <div class="am-list-clear" tabindex="0" aria-label="清空输入框" aria-controls="demo-input-1">
+                            <i class="am-icon-clear am-icon" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="am-list-item am-input-autoclear">
+                        <!--<div class="am-list-label" id="list-label-1">标签文本</div>-->
+                        <div class="am-list-control">
+                            <input id="pass" name="pass" required="required" type="password" placeholder="请输入密码" value="<?=isset($_GET['pass']) ? $_GET['pass'] : ''; ?>" aria-labelledby="list-label-1">
                         </div>
                         <div class="am-list-clear" tabindex="0" aria-label="清空输入框" aria-controls="demo-input-1">
                             <i class="am-icon-clear am-icon" aria-hidden="true"></i>

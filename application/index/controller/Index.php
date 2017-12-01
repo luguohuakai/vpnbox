@@ -80,10 +80,20 @@ class Index extends Base
     // 微信绑定设备mac操作
     public function bindMacHandle(){
         $mac =  input('post.mac');
+        $password = input('post.pass');
+        $method = input('post.method'); // 1网页 2扫码
+        if ($method == 2){
+            $password = ED($password,'D');
+        }
         // 最先要确定此mac存在吗
         $exist = Db::table('users')->where('user_name',$mac)->value('user_id');
         if (!$exist){
             $this->error('此Box不存在');
+        }
+        // 密码是否正确
+        $db_password = Db::table('users')->where('user_name',$mac)->value('user_password');
+        if ($db_password != $password){
+            $this->error('Mac或密码错误');
         }
         // 先看此Box之前是否被绑定过了
         $wx_open_id = Db::table('users')->where('user_name',$mac)->value('wx_open_id');

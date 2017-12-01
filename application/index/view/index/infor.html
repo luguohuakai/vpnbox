@@ -105,10 +105,12 @@
 
     $(function () {
        $('#able').click(function () {
+           toast_show('稍等片刻','loading',false);
            post(
                'v2/re-connect-vpn',
                {token: SS('token')},
                function (e) {
+                   toast_hide();
                     if(e.code === 200){
                        toast_show(e.msg);
                    }

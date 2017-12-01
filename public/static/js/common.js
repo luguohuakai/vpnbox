@@ -18,7 +18,7 @@ function toast(str, hide) {
 /**
  *
  * @param str 弹出框显示内容
- * @param type info success network fail
+ * @param type warn info success network fail loading
  * @param hide 1秒后是否隐藏
  */
 function toast_show(str, type, hide) {
