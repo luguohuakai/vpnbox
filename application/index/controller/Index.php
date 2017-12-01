@@ -42,7 +42,8 @@ class Index extends Base
 
     // 重置密码页面
     public function resetpassword(){
-        return view('resetpassword');
+        $vpn_setting = Db::table('vpn_setting')->where('username',session('user_name'))->find();
+        return view('resetpassword',['wifi_name' => $vpn_setting['ssid'],'pass' => $vpn_setting['key']]);
     }
 
     // 重置密码页面
