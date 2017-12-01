@@ -23,6 +23,7 @@ class Base extends Controller
         'index/test/checksignature',
         'index/test/index',
         'index/test/setmenu',
+        'index/test/getqrurl',
         'index/pay/test',
         'index/pay/index',
         'index/pay/payrequest',
@@ -39,7 +40,7 @@ class Base extends Controller
     public function _initialize()
     {
         parent::_initialize();
-
+//dd($this->request->path());
         // 找user_id 和 user_name
         $wx_open_id = session('wx_open_id');
         if ($wx_open_id){
@@ -57,6 +58,7 @@ class Base extends Controller
                     session('md5_password',null);
                 }
             }catch (Exception $e){
+                dd();
                 $this->error($e->getMessage());
             }
         }

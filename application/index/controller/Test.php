@@ -114,6 +114,21 @@ class Test extends Base
         dump(session(''));
     }
 
+    // 生成二维码链接
+    public function getQrUrl(){
+        $mac = input('mac');
+        $data['mac'] = $mac;
+        $pass = Db::table('users')->where('user_name',$mac)->value('user_password');
+        if (!$pass){
+            return json('输入有误');
+        }
+        $data['code'] = ED($pass,'E');
+        $data['method'] = 2; // 1手动绑定 2扫码绑定
+        $url = url('/index/index/bindmac',$data,true,true);
+        echo "<textarea id=\"\" cols=\"100\" rows=\"10\">{$url}</textarea>";exit;
+        return json($url);
+    }
+
     // 连接数据库
     public function testDb(){
         $users = Db::table('setting')->where('key','weixin_access_token')->value('value');
