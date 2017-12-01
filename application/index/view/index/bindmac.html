@@ -14,7 +14,7 @@
 
     <!-- 组件 -->
     <link rel="stylesheet"
-          href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/??widget/message.css,widget/loading.css,widget/card.css,icon/message.css,widget/notice.css,widget/page-result.css,widget/toast.css"/>
+          href="https://a.alipayobjects.com/g/antui/antui/10.0.18/dpl/??widget/message.css,icon/form.css,widget/loading.css,widget/card.css,icon/message.css,widget/notice.css,widget/page-result.css,widget/toast.css"/>
 
     <!-- js -->
     <script charset="utf-8" src="__JS__/jquery.min.js"></script>
@@ -40,19 +40,19 @@
                     <div class="am-list-item am-input-autoclear">
                         <!--<div class="am-list-label" id="list-label-1">标签文本</div>-->
                         <div class="am-list-control">
-                            <input  name="mac" required="required" type="text" placeholder="请填写Mac地址" value="<?=input('mac',''); ?>" aria-labelledby="list-label-1">
+                            <input  name="mac" id="mac" required="required" type="text" placeholder="请填写Mac地址" value="<?=input('mac',''); ?>" aria-labelledby="list-label-1">
                         </div>
-                        <div class="am-list-clear" tabindex="0" aria-label="清空输入框" aria-controls="demo-input-1">
+                        <div class="am-list-clear" tabindex="0" aria-label="清空输入框" aria-controls="mac">
                             <i class="am-icon-clear am-icon" aria-hidden="true"></i>
                         </div>
                     </div>
                     <div class="am-list-item am-input-autoclear">
                         <!--<div class="am-list-label" id="list-label-1">标签文本</div>-->
                         <div class="am-list-control">
-                            <input id="new_pass" name="pass" required="required" type="password" placeholder="请输入密码" value="<?=input('code',''); ?>" aria-labelledby="list-label-1"  style="float:left;width: 93%;">
+                            <input id="new_pass" name="pass" required="required" type="text" placeholder="请输入密码" value="<?=input('code',''); ?>" aria-labelledby="list-label-1"  style="float:left;width: 93%;">
                             <img id="demo_img" onclick="hideShowPsw()" src="__IMAGES__/invisible.png" style="width:20px; margin-top:5px;float:left;">
                         </div>
-                        <div class="am-list-clear" tabindex="0" aria-label="清空输入框" aria-controls="demo-input-1">
+                        <div class="am-list-clear" tabindex="0" aria-label="清空输入框" aria-controls="new_pass">
                             <i class="am-icon-clear am-icon" aria-hidden="true"></i>
                         </div>
                     </div>

@@ -14,6 +14,22 @@ class Test extends Base
 
     // 微信token验证
     public function checkSignature(){
+        // 微信post的xml数据
+        $post_xml = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $post_arr = json_decode(json_encode(simplexml_load_string($post_xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+
+        // 关注事件
+        if($post_arr['Event'] == 'subscribe'){
+            // 发送消息给用户 邀请绑定
+
+        }
+
+
+
+
+
+
+//        L(json_encode($post_arr),'cc/dd');
         // 验证一次基本就不用了
 
 //        $url = 'http://47.104.1.91/index/index/checksignature'; // 正式服
