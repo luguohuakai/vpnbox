@@ -87,7 +87,7 @@
         var reg1=/^\d+$/;
         var reg=/^([1-9]\d{0,5}(\.\d)?|0\.\d)$/;
         if(!reg.test($("input:text").val())||!reg1.test($("input:text").val())){
-            alert("请您输入小于10万的规范数字");
+            alert("请您输入大于1元小于10万的规范数字");
             $('form').action="";
             return false;
         }
