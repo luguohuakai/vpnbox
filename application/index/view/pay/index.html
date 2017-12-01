@@ -80,9 +80,14 @@
         }
         $("input[name='user_name']").val(SS('user_name'));
     });
-
     $('.tiny').click(function () {
         $('#amount').val($(this).val());
+    });
+    $(".am-button").click(function() {
+        var reg=/^\d+$/;
+        if(!reg.test($("input:text").val())){
+            alert("请输入数字");
+        }
     });
 
     // 支付
