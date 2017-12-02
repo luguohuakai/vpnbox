@@ -2,7 +2,6 @@
 namespace app\index\controller;
 
 use think\Db;
-use think\Exception;
 
 class Test extends Base
 {
@@ -44,12 +43,20 @@ class Test extends Base
         if (!in_array($msg_type,$this->wx_msg_lists)){
             return 'success';
             return '';
-            return false;
+            return false; // 微信中不能返回false
         }
 
         // 调用各自的工厂类
-        $class = 'Wx' . ucfirst($msg_type) . 'Factory';
-        return (new $class($post_arr))->xml;
+//        $class = 'Wx' . ucfirst($msg_type) . 'Factory';
+//        return (new $class($post_arr))->xml;
+        switch ($msg_type){
+            case 'event':
+                return (new WxEventFactory($post_arr))->xml;
+            case 'text':
+                return (new WxTextFactory($post_arr))->xml;
+            default:
+                return '';
+        }
 
         // 关注事件
         if($post_arr['Event'] == 'subscribe'){
@@ -205,6 +212,9 @@ class Test extends Base
 
     // 连接数据库
     public function testDb(){
+        $cla = 'WxTextFactory';
+        $aa = new $cla(['aa']);
+        $aa = new WxTextFactory(['aa']);
         $users = Db::table('setting')->where('key','weixin_access_token')->value('value');
 
         dump($users);
