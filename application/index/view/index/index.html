@@ -99,6 +99,20 @@
         if (SS('user_name') === null || SS('user_name') === ''){
             SS('user_name','{$Request.param.mac}');
         }
+        // 每次重新请求token
+        SS('token',null);
+        post(
+            'v2/login',
+            {user_name:SS('user_name'),user_pass:CS('md5_password')},
+            function (e2) {
+                if (e2.code === 200){
+                    SS('token',e2.token);
+                    // 再次发起请求
+                }else {
+                    toast_show(e2.msg);
+                }
+            }
+        );
 
         $.post(
             "__INCLUDE__/proxy.php",
