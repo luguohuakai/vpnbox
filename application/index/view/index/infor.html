@@ -53,46 +53,43 @@
             <div class="am-list-body" aria-labelledby="list-header-1">
                 <div >
                     <div class="am-list-item">
-                        <div class="am-list-content">可用server</div>
+                        <div class="am-list-content">当前VPN设置</div>
                         <!--<div class="am-list-extra" id="all_server"></div>-->
                     </div>
                     <div class="select">
-                        <ul id="ul">
-                            <li>SRUN_VPN</li>
-                            <li>SRUN_VPN2.2</li>
-                            <li>SRUN</li>
-                            <li>12344</li>
+                        <ul id="current_vpn">
+                            <li id="proto">协议：</li>
+                            <li id="defaultroute">路由：</li>
+                            <li id="ssid">WiFi名称：</li>
+                            <li id="current_server">当前vpn服务器：</li>
+                            <li id="current_work_lan">当前网段：</li>
+                            <li id="create_at">创建于：</li>
+                            <li id="update_at">更新于：</li>
                         </ul>
                     </div>
                 </div>
-               <div>
-                   <div class="am-list-item">
-                       <div class="am-list-content">当前server</div>
-                       <!--<div class="am-list-extra" id="current_server"></div>-->
-                   </div>
-                   <div class="current">SRUN</div>
-               </div>
+                <div >
+                    <div class="am-list-item">
+                        <div class="am-list-content">可选server</div>
+                        <!--<div class="am-list-extra" id="all_server"></div>-->
+                    </div>
+                    <div class="select">
+                        <ul id="all_server">
+                            <li>暂无数据</li>
+                        </ul>
+                    </div>
+                </div>
                 <div>
                     <div class="am-list-item">
-                        <div class="am-list-content">可用网段</div>
+                        <div class="am-list-content">可选网段</div>
                         <!--<div class="am-list-extra" id="Available_network"></div>-->
                     </div>
                   <div class="select">
-                      <ul id="oul">
-                          <li>SRUN_VPN</li>
-                          <li>SRUN_VPN2.2</li>
-                          <li>SRUN</li>
-                          <li>12344</li>
+                      <ul id="all_work_lan">
+                          <li>暂无数据</li>
                       </ul>
                   </div>
                 </div>
-               <div>
-                   <div class="am-list-item">
-                       <div class="am-list-content">当前网段</div>
-                       <!--<div class="am-list-extra" id="current_network"></div>-->
-                   </div>
-                   <div class="current">SRUN</div>
-               </div>
             </div>
         </div>
     </div>
@@ -108,16 +105,55 @@
                {token: SS('token')},
                function (e) {
                    toast_hide();
+                   location.reload();
                     if(e.code === 200){
                        toast_show(e.msg);
                    }
-                   if (e.code !== 4000) {
-                       stop = true;
-                        return false;
-                   }
-               },false
+                   // if (e.code !== 4000) {
+                   //     stop = true;
+                   //      return false;
+                   // }
+               }
            );
         });
+
+       // VPN详情
+        toast_show('稍等片刻','loading',false);
+        post(
+            'v2/get-vpn-detail',
+            {token:SS('token')},
+            function (e) {
+                toast_hide();
+                if (e.code === 200){
+                    // 组装all_server
+                    var str_all_server = '';
+                    for (var i in e.all_server){
+                        str_all_server += '<li>' + e.all_server[i].vpnname + '(' + e.all_server[i].vpn_server + ')' + '</li>';
+                    }
+
+                    // 组装all_work_lan
+                    var str_all_work_lan = '';
+                    for (var j in e.all_work_lan){
+                        str_all_work_lan += '<li>' + e.all_work_lan[j].partition_name + '(' + e.all_work_lan[j].work_lan + ')' + '</li>'
+                    }
+                    $('#all_server').html(str_all_server);
+                    if(e.current_server !== ''){
+                        $('#current_server').append(e.current_server);
+                    }
+                    $('#all_work_lan').html(str_all_work_lan);
+                    if(e.current_work_lan !== ''){
+                        $('#current_work_lan').append(e.current_work_lan);
+                    }
+                    $('#proto').append(e.vpn_detail.proto);
+                    $('#defaultroute').append(e.vpn_detail.defaultroute);
+                    $('#ssid').append(e.vpn_detail.ssid);
+                    $('#create_at').append(e.vpn_detail.create_at);
+                    $('#update_at').append(e.vpn_detail.update_at);
+                }else {
+                    toast_show(e.msg);
+                }
+            }
+        )
     })
 </script>
 </body>
