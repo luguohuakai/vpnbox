@@ -121,10 +121,9 @@
 
         // 启用和禁用
         $('#is_enable').click(function () {
+            toast_show('设定中...','loading');
             var old_status = $(this).attr('checked');
             var status;
-            // $('.am-toast-loading').show();
-            toast_show('设定中...','loading',false);
             if (old_status === 'checked') {
                 // 禁用
                 status = 1;
@@ -138,12 +137,15 @@
                 'qr/start-or-stop',
                 {user_name: SS('user_name'), cmd: status},
                 function (e) {
-                    // $('.am-toast').hide();
-                    toast_hide();
                     if(e.code === 0){
                         toast_show(e.message,'network');
                     }else {
-                        toast_show(e.msg);
+                        if (e.code === 200){
+                            setTimeout("toast_show('"+e.msg+"','success')",2000);
+//                            toast_show(e.msg,'success');
+                        }else {
+                            toast_show(e.msg,'fail')
+                        }
                     }
                     if (e.code !== 200) {
                         stop = true;

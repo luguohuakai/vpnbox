@@ -105,10 +105,10 @@
                {token: SS('token')},
                function (e) {
                    toast_hide();
-                   location.reload();
                     if(e.code === 200){
                        toast_show(e.msg);
                    }
+                   setTimeout("location.reload()",3000);
                    // if (e.code !== 4000) {
                    //     stop = true;
                    //      return false;
