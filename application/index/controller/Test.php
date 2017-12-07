@@ -32,6 +32,29 @@ class Test extends Base
         return json(['code' => 200, 'msg' => '获取成功']);
     }
 
+    // 硬件token验证 box
+    public function checkBoxSignature(){
+//        L(json_encode(input()),'a');
+        $signature = $_GET["signature"];
+        $timestamp = $_GET["timestamp"];
+        $nonce = $_GET["nonce"];
+        $echostr = $_GET['echostr'];
+
+        $token = 'asdag32344';
+        $EncodingAESKey = 'ZO0fVtLkWRGCqbAg70XgkN4gFNXGYCIl0ojLhPRAKiZ';
+        $tmpArr = array($token, $timestamp, $nonce);
+        sort($tmpArr, SORT_STRING);
+        $tmpStr = implode( $tmpArr );
+        $tmpStr = sha1( $tmpStr );
+
+//        L($tmpStr . '=====' . $signature,'b');
+        if( $tmpStr == $signature ){
+            exit(input('get.echostr'));
+        }else{
+            return false;
+        }
+    }
+
     // 微信token验证
     public function checkSignature(){
         // 微信post的xml数据

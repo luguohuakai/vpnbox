@@ -25,6 +25,7 @@ class Base extends Controller
         'index/test/setmenu',
         'index/test/getqrurl',
         'index/test/testdb',
+        'index/test/checkboxsignature',
         'index/pay/test',
         'index/pay/index',
         'index/pay/payrequest',
