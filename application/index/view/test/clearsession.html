@@ -10,7 +10,15 @@
 <script>
     $(function () {
         localStorage.clear();
-        document.cookie = '';
+        clear_all_cookies();
+
+        function clear_all_cookies(){
+            var keys=document.cookie.match(/[^ =;]+(?=\=)/g);
+            if (keys) {
+                for (var i =  keys.length; i--;)
+                    document.cookie=keys[i]+'=0;expires=' + new Date( 0).toUTCString()
+            }
+        }
     })
 </script>
 </body>

@@ -100,9 +100,6 @@
             LS('user_name','{$Request.param.mac}');
         }
         // 每次重新请求token
-//        LS('token',null);
-//        LS('haha','1122');
-//        alert(LS('haha'));
         post(
             'v2/login',
             {user_name:LS('user_name'),user_pass:CS('md5_password')},

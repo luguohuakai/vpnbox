@@ -12,6 +12,7 @@ class Index extends Base
         // 先看是否已经绑定
         $rs = Db::table('users')->where('wx_open_id',session('wx_open_id'))->value('user_name');
         if ($rs){
+            session('user_name',$rs);
             return view('index',['mac' => $rs]);
         }else{
             return view('bindmac');

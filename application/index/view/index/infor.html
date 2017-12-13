@@ -70,7 +70,7 @@
                 </div>
                 <div >
                     <div class="am-list-item">
-                        <div class="am-list-content">可选server</div>
+                        <div class="am-list-content">可用vpn服务器</div>
                         <!--<div class="am-list-extra" id="all_server"></div>-->
                     </div>
                     <div class="select">
@@ -81,7 +81,7 @@
                 </div>
                 <div>
                     <div class="am-list-item">
-                        <div class="am-list-content">可选网段</div>
+                        <div class="am-list-content">可用网段</div>
                         <!--<div class="am-list-extra" id="Available_network"></div>-->
                     </div>
                   <div class="select">
@@ -136,11 +136,16 @@
                     for (var j in e.all_work_lan){
                         str_all_work_lan += '<li>' + e.all_work_lan[j].partition_name + '(' + e.all_work_lan[j].work_lan + ')' + '</li>'
                     }
-                    $('#all_server').html(str_all_server);
+
+                    if (str_all_server !== ''){
+                        $('#all_server').html(str_all_server);
+                    }
                     if(e.current_server !== ''){
                         $('#current_server').append(e.current_server);
                     }
-                    $('#all_work_lan').html(str_all_work_lan);
+                    if(str_all_work_lan !== ''){
+                        $('#all_work_lan').html(str_all_work_lan);
+                    }
                     if(e.current_work_lan !== ''){
                         $('#current_work_lan').append(e.current_work_lan);
                     }
