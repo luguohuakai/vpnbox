@@ -10,7 +10,7 @@
 //$content = file_get_contents($interface);
 //exit($content);
 include_once './function.php';
-sleep(1);
+//sleep(1);
 //$host_8080 = 'https://121.43.167.65:8080/api/';
 $host_8080 = 'https://wx.srun.com:8080/api/';
 //$host_8080 = 'https://47.104.1.91:8080/api/';
