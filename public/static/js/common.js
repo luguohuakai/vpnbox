@@ -174,14 +174,14 @@ function post(url, data, success, async) {
         success:function (e) {
             // alert(CS('md5_password'));
             // toast_show(e.msg);
-            // alert(SS('token'));
+            // alert(LS('token'));
             if(e.code === 40013){
                 post(
                     'v2/login',
-                    {user_name:SS('user_name'),user_pass:md5_password},
+                    {user_name:LS('user_name'),user_pass:md5_password},
                     function (e2) {
                         if (e2.code === 200){
-                            SS('token',e2.token);
+                            LS('token',e2.token);
                             // 再次发起请求
                             $.ajax({
                                 url:proxy,
@@ -189,30 +189,32 @@ function post(url, data, success, async) {
                                 data:data,
                                 dataType:'json',
                                 async:async,
-                                success:function (e) {
-                                    if(e.code === 40013){
+                                success:function (e3) {
+                                    if(e3.code === 40013){
                                         post(
                                             'v2/login',
-                                            {user_name:SS('user_name'),user_pass:md5_password},
-                                            function (e2) {
-                                                if (e2.code === 200){
-                                                    SS('token',e2.token);
+                                            {user_name:LS('user_name'),user_pass:md5_password},
+                                            function (e4) {
+                                                if (e4.code === 200){
+                                                    LS('token',e4.token);
                                                     // 再次发起请求
                                                 }else {
-                                                    alert(e2.msg);
+                                                    alert(e4.msg);
+                                                    toast_show('身份认证未通过');
                                                 }
                                             }
                                         )
                                     }else {
-                                        success(e);
+                                        success(e3);
                                     }
                                 },
-                                error:function (e) {
-                                    console.log(e);
+                                error:function (e3) {
+                                    console.log(e3);
                                 }
                             })
                         }else {
                             alert(e2.msg);
+                            toast_show('身份认证未通过');
                         }
                     }
                 )

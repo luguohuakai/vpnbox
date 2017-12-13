@@ -95,28 +95,29 @@
     // box状态检测
     $(function () {
         // 保存user_name
-        SS('user_name','{$mac}');
-        if (SS('user_name') === null || SS('user_name') === ''){
-            SS('user_name','{$Request.param.mac}');
+        LS('user_name','{$mac}');
+        if (LS('user_name') === null || LS('user_name') === ''){
+            LS('user_name','{$Request.param.mac}');
         }
         // 每次重新请求token
-        SS('token',null);
+//        LS('token',null);
+//        LS('haha','1122');
+//        alert(LS('haha'));
         post(
             'v2/login',
-            {user_name:SS('user_name'),user_pass:CS('md5_password')},
+            {user_name:LS('user_name'),user_pass:CS('md5_password')},
             function (e2) {
                 if (e2.code === 200){
-                    SS('token',e2.token);
-                    // 再次发起请求
+                    LS('token',e2.token);
                 }else {
                     toast_show(e2.msg);
                 }
-            }
+            },false
         );
 
         $.post(
             "__INCLUDE__/proxy.php",
-            {interface:'qr/check',mac:SS('user_name')},
+            {interface:'qr/check',mac:LS('user_name')},
             function (e) {
                 $('.am-loading').hide();
                 if (e.code === 200) {

@@ -68,7 +68,7 @@
         var stop_time = $('#stop_time').val();
         post(
             'qr/set-stop-time',
-            {user_name:SS('user_name'),stop_time:stop_time},
+            {user_name:LS('user_name'),stop_time:stop_time},
             function (e) {
                 if(e.code === 200){
                     toast_show(e.msg,'success');

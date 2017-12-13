@@ -92,11 +92,11 @@
 <script>
     $(function () {
         // 保存user_name
-        SS('user_name','{$mac}');
-        if (SS('user_name') === null || SS('user_name') === ''){
-            SS('user_name','{$Request.param.mac}');
+        LS('user_name','{$mac}');
+        if (LS('user_name') === null || LS('user_name') === ''){
+            LS('user_name','{$Request.param.mac}');
         }
-        $("input[name='user_name']").val(SS('user_name'));
+        $("input[name='user_name']").val(LS('user_name'));
     })
 </script>
 </body>

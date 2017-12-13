@@ -102,7 +102,7 @@
            toast_show('稍等片刻','loading',false);
            post(
                'v2/re-connect-vpn',
-               {token: SS('token')},
+               {token: LS('token')},
                function (e) {
                    toast_hide();
                     if(e.code === 200){
@@ -121,7 +121,7 @@
         toast_show('稍等片刻','loading',false);
         post(
             'v2/get-vpn-detail',
-            {token:SS('token')},
+            {token:LS('token')},
             function (e) {
                 toast_hide();
                 if (e.code === 200){

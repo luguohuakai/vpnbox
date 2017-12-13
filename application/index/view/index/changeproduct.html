@@ -43,7 +43,7 @@
         post(
             // 'qr/get-products-list',
             'qr/list',
-            {user_name:SS('user_name')},
+            {user_name:LS('user_name')},
             function (e) {
                 var all_product = e.all_product;
                 var ordered_product = e.ordered_product;

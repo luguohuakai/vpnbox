@@ -212,10 +212,13 @@ class Test extends Base
     // 清除session
     public function clearSession(){
         dump(session(null));
+
+        return view();
     }
     // 查看session
     public function sessionList(){
         dump(session(''));
+        return view();
     }
 
     // 生成二维码链接

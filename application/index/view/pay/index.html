@@ -74,11 +74,11 @@
 <script>
     $(function () {
         // 保存user_name
-        SS('user_name','78-A3-51-15-DD-39');
-        if (SS('user_name') === null || SS('user_name') === ''){
-            SS('user_name','');
+        LS('user_name','78-A3-51-15-DD-39');
+        if (LS('user_name') === null || LS('user_name') === ''){
+            LS('user_name','');
         }
-        $("input[name='user_name']").val(SS('user_name'));
+        $("input[name='user_name']").val(LS('user_name'));
     });
     $('.tiny').click(function () {
         $('#amount').val($(this).val());

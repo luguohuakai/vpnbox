@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script charset="utf-8" src="__JS__/jquery.min.js"></script>
+    <script charset="utf-8" src="__JS__/common.js"></script>
+    <title>查看session localStorage cookie</title>
+</head>
+<body>
+<p id="info">
+localStorage:<br>
+</p>
+<p id="info2">
+cookie:<br>
+</p>
+<script>
+    $(function () {
+        for(var i=localStorage.length - 1 ; i >=0; i--){
+            $('#info').append(localStorage.key(i) + ':' + localStorage.getItem(localStorage.key(i)) + '<br>');
+        }
+        $('#info').append(LS('token'));
+        $('#info').append(LS('user_name'));
+        $('#info2').append(document.cookie);
+    })
+</script>
+</body>
+</html>

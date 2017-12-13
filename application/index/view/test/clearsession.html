@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script charset="utf-8" src="__JS__/jquery.min.js"></script>
+    <script charset="utf-8" src="__JS__/common.js"></script>
+    <title>清空session sessionStorage cookie</title>
+</head>
+<body>
+<script>
+    $(function () {
+        sessionStorage.clear();
+        document.cookie = '';
+    })
+</script>
+</body>
+</html>

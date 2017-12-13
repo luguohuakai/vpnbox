@@ -97,16 +97,16 @@
 <script type="text/javascript">
     $(function () {
         // 保存user_name
-        SS('user_name','{$mac}');
-        if (SS('user_name') === null || SS('user_name') === ''){
-            SS('user_name','{$Request.param.mac}');
+        LS('user_name','{$mac}');
+        if (LS('user_name') === null || LS('user_name') === ''){
+            LS('user_name','{$Request.param.mac}');
         }
 
         $('.widget-demo-show-panel').hide();
         $('.am-loading').show();
         $.post(
             '__INCLUDE__/proxy.php',
-            {interface: 'qr/get-box-status', user_name: SS('user_name')},
+            {interface: 'qr/get-box-status', user_name: LS('user_name')},
             function (e) {
                 $('.am-loading').hide();
                 $('.widget-demo-show-panel').show();
@@ -135,7 +135,7 @@
             var stop = false;
             post(
                 'qr/start-or-stop',
-                {user_name: SS('user_name'), cmd: status},
+                {user_name: LS('user_name'), cmd: status},
                 function (e) {
                     if(e.code === 0){
                         toast_show(e.message,'network');
