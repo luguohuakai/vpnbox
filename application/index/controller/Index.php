@@ -84,7 +84,7 @@ class Index extends Base
         $password = input('post.pass');
         $method = input('post.method'); // 1网页 2扫码
         if ($method == 2){
-            $password = ED($password,'D');
+            $password = ED(base64_decode($password),'D');
         }
         // 最先要确定此mac存在吗
         $exist = Db::table('users')->where('user_name',$mac)->value('user_id');
